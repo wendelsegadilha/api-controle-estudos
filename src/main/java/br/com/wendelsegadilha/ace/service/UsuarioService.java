@@ -17,6 +17,9 @@ public class UsuarioService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	public Usuario salvar(Usuario usuario) {
+		if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
+			throw new RuntimeException("E-mail já cadastrado.");
+		}
 		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		return usuarioRepository.save(usuario);
 	}
