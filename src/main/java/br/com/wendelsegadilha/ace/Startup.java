@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.com.wendelsegadilha.ace.model.Disciplina;
 import br.com.wendelsegadilha.ace.model.Usuario;
+import br.com.wendelsegadilha.ace.model.enums.Perfil;
 import br.com.wendelsegadilha.ace.repository.DisciplinaRepository;
 import br.com.wendelsegadilha.ace.repository.UsuarioRepository;
 
@@ -20,6 +22,9 @@ public class Startup implements CommandLineRunner{
 	
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Startup.class, args);
@@ -28,7 +33,8 @@ public class Startup implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Usuario u1 = new Usuario(1, "Wendel Segadilha", "wendelsegadilha99@gmail.com", "123");
+		Usuario u1 = new Usuario(1, "Wendel Segadilha", "wendelsegadilha99@gmail.com", passwordEncoder.encode("123"));
+		u1.adicionarPerfil(Perfil.ASSINANTE);
 		
 		Disciplina d1 = new Disciplina(1, "Matemática", "MAT", u1);
 		Disciplina d2 = new Disciplina(2, "Português", "POR", u1);
