@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.wendelsegadilha.ace.expetion.CadastroUsuarioException;
 import br.com.wendelsegadilha.ace.model.Usuario;
 import br.com.wendelsegadilha.ace.repository.UsuarioRepository;
 
@@ -18,7 +19,7 @@ public class UsuarioService {
 	
 	public Usuario salvar(Usuario usuario) {
 		if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
-			throw new RuntimeException("E-mail já cadastrado.");
+			throw new CadastroUsuarioException("E-mail já cadastrado.");
 		}
 		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		return usuarioRepository.save(usuario);
