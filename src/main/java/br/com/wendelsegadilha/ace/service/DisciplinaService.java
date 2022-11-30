@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.wendelsegadilha.ace.model.Disciplina;
 import br.com.wendelsegadilha.ace.repository.DisciplinaRepository;
+import br.com.wendelsegadilha.ace.security.UserSS;
 
 @Service
 public class DisciplinaService {
@@ -19,7 +20,8 @@ public class DisciplinaService {
 	}
 
 	public Disciplina buscarPorId(Integer id) {
-		return disciplinaRepository.findById(id).get();
+		UserSS usuario = UsuarioService.autenticado();
+		return disciplinaRepository.findByIdWithUsuario(id, usuario.getId()).get();
 	}
 
 	public Disciplina salvar(Disciplina disciplina) {

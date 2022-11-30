@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import br.com.wendelsegadilha.ace.expetion.AutorizacaoException;
 import br.com.wendelsegadilha.ace.expetion.CadastroUsuarioException;
 import br.com.wendelsegadilha.ace.expetion.ObjetoNaoEncontradoException;
 import br.com.wendelsegadilha.ace.expetion.ViolacaoIntegridadeDadosException;
@@ -48,6 +49,12 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> cadastroUsuario(CadastroUsuarioException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+    
+    @ExceptionHandler(AutorizacaoException.class)
+    public ResponseEntity<StandardError> autorizacaoUsuario(AutorizacaoException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
     
   
