@@ -55,6 +55,10 @@ public class Usuario implements Serializable {
 		return perfis;
 	}
 	
+	public void setPerfis(Set<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+	
 	public void adicionarPerfil(Perfil perfil) {
 		this.perfis.add(perfil);
 	}
