@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.wendelsegadilha.ace.model.Disciplina;
+import br.com.wendelsegadilha.ace.model.dto.DisciplinaDTO;
 import br.com.wendelsegadilha.ace.service.DisciplinaService;
 
 @RestController
@@ -27,26 +28,26 @@ public class DisciplinaController {
 	@GetMapping
 	public ResponseEntity<List<Disciplina>> listar() {
 		List<Disciplina> disciplinas = disciplinaService.listar();
-		return ResponseEntity.status(HttpStatus.CREATED).body(disciplinas);
+		return ResponseEntity.status(HttpStatus.OK).body(disciplinas);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Disciplina> buscarPorId(@PathVariable Integer id) {
 		Disciplina disciplina = disciplinaService.buscarPorId(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
+		return ResponseEntity.status(HttpStatus.OK).body(disciplina);
 	}
 
 	@PostMapping
-	public ResponseEntity<Disciplina> salvar(@RequestBody Disciplina disciplina) {
-		disciplina = disciplinaService.salvar(disciplina);
+	public ResponseEntity<Disciplina> salvar(@RequestBody DisciplinaDTO disciplinaDTO) {
+		var disciplina = disciplinaService.salvar(disciplinaDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Disciplina> salvar(@PathVariable Integer id, @RequestBody Disciplina disciplina) {
 		disciplina.setId(id);
-		disciplina = disciplinaService.salvar(disciplina);
-		return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
+		disciplina = disciplinaService.atualizar(disciplina);
+		return ResponseEntity.status(HttpStatus.OK).body(disciplina);
 	}
 
 	@DeleteMapping("/{id}")

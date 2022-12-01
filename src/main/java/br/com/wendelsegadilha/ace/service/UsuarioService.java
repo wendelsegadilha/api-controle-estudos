@@ -48,7 +48,7 @@ public class UsuarioService {
 		return usuarioRepository.save(usuarioEntity);
 	}
 
-	public void verificaUser(Integer id) {
+	public static void verificaUser(Integer id) {
 		UserSS user = autenticado();
 		if (user == null || !id.equals(user.getId())) {
 			throw new AutorizacaoException("Acesso negado.");
