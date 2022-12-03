@@ -60,6 +60,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = jwtUtil.gerarToken(username);
         res.addHeader("Authorization", "Bearer " + token); //Token via header
         res.addHeader("access-control-expose-headers", "Authorization");
+        res.setHeader("Content-Type", "application/json");
         res.getWriter().write("{\"Authorization\": \""+token+"\"}"); //Token via body (Teste)
 	}
 	
